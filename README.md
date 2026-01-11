@@ -1,6 +1,6 @@
 # rsspodfetch.sh
 
-v0.1, January 2026
+v0.1b, January 2026
 
 ## What is this
 
@@ -197,4 +197,14 @@ not just a web browser.
 `rsspodfetch.sh` is copyright (c)2026 Kevin Boone, released under the 
 terms of the GNU Public Licence, v3.0. There is, of course, no warranty
 of any kind.
+
+## Revision history
+
+Jan 10 2026  
+Modified extension handling, to account for the fact that the URL might have
+content after the file extension. At present, just assume .mp3 as the
+extension, since we only handle MP3 streams.
+
+Jan 9 2026  
+First release.
 

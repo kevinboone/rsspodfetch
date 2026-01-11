@@ -103,8 +103,7 @@ cat > $xslt_file << EOF
 <xsl:output method="text"/>
 <xsl:template match="/rss/channel">
 <xsl:for-each select="item">
-  <xsl:value-of select="pubDate"/>@@@<xsl:value-of select="title"/>@@@<xsl:value-of select="enclosure/@url"/>
-  <xsl:text>&#xa;</xsl:text>
+  <xsl:value-of select="pubDate"/>$DELIMITER<xsl:value-of select="title"/>$DELIMITER<xsl:value-of select="enclosure/@url"/>$DELIMITER
 </xsl:for-each>
 </xsl:template>
 </xsl:stylesheet>
@@ -125,8 +124,8 @@ fi
 while read -r line; do
   # Only process not-blank lines
   if [ ! "$line" == "" ] ; then
-    s=$line$DELIMITER
-    # Split the line into an array, with each token separated by $DELIMITER
+    s=$line
+    # Split the line into an array, with each token terminated by $DELIMITER
     # The syntax of this parameter substitution is pretty ugly, as you see
     array=();
     while [[ $s ]]; do
@@ -142,15 +141,19 @@ while read -r line; do
     # Extract the file extension from the URL, but bear in mind we only
     #   support .mp3 at present
     extension="${url##*.}"
+    # The URL may contain material after the extension, which we would have
+    #   to remove, if were were handling anything but MP3 streams...
+    extension="mp3" # ...but we're not, at present 
 
     # TODO: warn/fail if this isn't an MP3 stream
 
-    # Make a sanitized title with no :, ?, pr " characters, to use in the output
+    # Make a sanitized title with no :, ?, *, or " characters, to use in the output
     #   filename; some filesystems choke on these characters. 
     # TODO: we might need to remove other characters as well, for maximum 
     #   compatibility
     sanitized_title="${title//:/_}"
     sanitized_title="${sanitized_title//\?/_}"
+    sanitized_title="${sanitized_title//\*/@}"
     sanitized_title="${sanitized_title//\"/\'}"
 
     # Convert the RFC2822 date-time from the RSS to a format that 
