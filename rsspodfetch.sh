@@ -155,6 +155,7 @@ while read -r line; do
     sanitized_title="${sanitized_title//\?/_}"
     sanitized_title="${sanitized_title//\*/@}"
     sanitized_title="${sanitized_title//\"/\'}"
+    sanitized_title="${sanitized_title//\//\_}"
 
     # Convert the RFC2822 date-time from the RSS to a format that 
     #   will sort alphanumerically into date-time order

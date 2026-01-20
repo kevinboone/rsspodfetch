@@ -1,6 +1,6 @@
 # rsspodfetch.sh
 
-v0.1b, January 2026
+v0.1c, January 2026
 
 ## What is this
 
@@ -200,11 +200,17 @@ of any kind.
 
 ## Revision history
 
-Jan 10 2026  
+Jan 
+
+0.1c Jan 20 026  
+Fixed to remove '/' from podcast titles, because these get interpreted
+as directory separators.
+
+0.1b Jan 10 2026  
 Modified extension handling, to account for the fact that the URL might have
 content after the file extension. At present, just assume .mp3 as the
 extension, since we only handle MP3 streams.
 
-Jan 9 2026  
+0.1a Jan 9 2026  
 First release.
 
